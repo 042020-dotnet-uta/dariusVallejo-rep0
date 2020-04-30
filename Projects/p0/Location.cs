@@ -4,9 +4,8 @@ using System.Text;
 
 namespace p0
 {
-    class Item
+    class Location
     {
-        public int ItemId { get; set; }
-        public String itemName { get; set; }
+        public int LocationId { get; set; }
     }
 }

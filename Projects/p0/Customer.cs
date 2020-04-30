@@ -1,12 +1,14 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace p0
 {
     class Customer
     {
-        int customerId { get; set; }
-        // customer name
-        // order history
-        // default store?
+        public int CustomerId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }
