@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace p0
 {
@@ -6,6 +8,7 @@ namespace p0
     {
         static void Main(string[] args)
         {
+            Info info = new Info();
             bool selecting = true;
             Customer customer = null;
 
@@ -30,37 +33,33 @@ namespace p0
                     switch (choice)
                     {
                         case 1:
-                            CustomerManager cm = new CustomerManager();
+                            CustomerManager cm = new CustomerManager(validatedInputString("First Name"), validatedInputString("Last Name"));
                             customer = cm.build();
                             break;
                         case 2:
-                            CustomerManager cm2 = new CustomerManager();
+                            CustomerManager cm2 = new CustomerManager(validatedInputString("First Name"), validatedInputString("Last Name"));
                             cm2.search();
                             break;
                         case 3:
-                            // Display details of an order
-                            // select
-                            // *
-                            // from Orders
-                            // where OrderId = input();
+                            var details = info.orderDetails(validatedInputString("order id"));
+                            foreach (var detail in details)
+                            {
+                                Console.WriteLine(detail.ToString());
+                            }
                             break;
                         case 4:
-                            // Display all order history of a store location
-                            // select
-                            // *
-                            // from Orders
-                            // where LocationId = input();
+                            string locationName = validatedInputString("store location name");
+                            var result = info.locationDetails(locationName);
+                            foreach (var r in result)
+                            {
+                                Console.WriteLine(r.ToString());
+                            }
                             break;
                         case 5:
-                            CustomerManager cm5 = new CustomerManager();
-                            Customer search = cm5.find();
-                            if (search != null)
+                            var orders = info.customerOrders(validatedInputString("First Name"), validatedInputString("Last Name")).ToList();
+                            foreach (var o in orders)
                             {
-                                OrderManager om5 = new OrderManager(search);
-                                om5.print();
-                            } else
-                            {
-                                Console.WriteLine("No results found.");
+                                Console.WriteLine(o.ToString());
                             }
 
                             break;
@@ -89,6 +88,26 @@ namespace p0
                 }
             }
         }
-            
+        private static string validatedInputString(string prompt)
+        {
+            bool valid;
+            string input;
+            do
+            {
+                Console.WriteLine("Please input " + prompt);
+                input = Console.ReadLine();
+                valid = Regex.IsMatch(input, "[a-zA-Z]");
+                if (!valid)
+                {
+                    Console.WriteLine("Please input a valid string.");
+                }
+                else
+                {
+                    return input;
+                }
+            } while (!valid);
+            return null;
+        }
+
     }
 }

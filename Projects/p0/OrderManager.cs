@@ -157,7 +157,6 @@ namespace p0
                     Console.WriteLine("Placed Order: {0} for {1} under Customer: {2} {3} at {4}", order.OrderId, order.total, customer.firstName, customer.lastName, order.orderDate);
                 }
             }
-
         }
 
         public void print()

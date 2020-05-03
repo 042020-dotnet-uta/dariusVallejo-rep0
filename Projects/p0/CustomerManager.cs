@@ -11,10 +11,10 @@ namespace p0
         private string iFirstName;
         private string iLastName;
 
-        public CustomerManager()
+        public CustomerManager(string firstName, string lastName)
         {
-            this.iFirstName = validatedStringInput("First Name");
-            this.iLastName = validatedStringInput("Last Name");
+            this.iFirstName = firstName;
+            this.iLastName = lastName;
         }
 
         public Customer find()
@@ -59,27 +59,6 @@ namespace p0
                 var result = db.Customers.Where(c => c.firstName == firstName && c.lastName == lastName).ToList();
                 return result;
             }
-        }
-
-        private string validatedStringInput(string prompt)
-        {
-            bool valid;
-            string input;
-            do
-            {
-                Console.WriteLine("Please input " + prompt);
-                input = Console.ReadLine();
-                valid = Regex.IsMatch(input, "[a-zA-Z]");
-                if (!valid)
-                {
-                    Console.WriteLine("Please input a valid string.");
-                }
-                else
-                {
-                    return input;
-                }
-            } while (!valid);
-            return null;
         }
     }
 }
