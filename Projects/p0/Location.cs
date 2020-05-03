@@ -6,6 +6,8 @@ namespace p0
 {
     class Location
     {
-        public int LocationId { get; set; }
+        public string LocationId { get; set; }
+        public string locationName { get; set; }
+        public List<Inventory> inventory { get; set; }
     }
 }

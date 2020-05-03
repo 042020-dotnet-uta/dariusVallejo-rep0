@@ -4,9 +4,10 @@ using System.Text;
 
 namespace p0
 {
-    class Item
+    interface Manager
     {
-        public int ItemId { get; set; }
-        public String itemName { get; set; }
+        void prompt();
+        void build();
+        void search();
     }
 }

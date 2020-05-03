@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,8 +8,16 @@ namespace p0
 {
     class Order
     {
-        public int OrderId { get; set; }
-        public int CustomerID { get; set; }
-        public List<Item> Items { get; set; }
+        public string OrderId { get; set; }
+        public string CustomerId { get; set; }
+        public string LocationId { get; set; }
+        public float total { get; set; }
+        public List<OrderItem> orderItems { get; set; }
+        public string orderDate { get; set; }
+        
+        public override string ToString()
+        {
+            return OrderId + " " + CustomerId + " " + LocationId + " " + total + " " + orderDate; 
+        }
     }
 }
