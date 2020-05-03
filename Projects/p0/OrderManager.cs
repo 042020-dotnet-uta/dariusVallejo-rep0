@@ -18,29 +18,18 @@ namespace p0
             using (var bc = new BusinessContext())
             {
                 List<Location> locations = bc.Locations.ToList();
-                Console.WriteLine("Select from list of stores");
                 for (int i = 0; i < locations.Count(); i++)
                 {
                     Console.WriteLine("{0}: {1}", (i + 1), locations[i].LocationId);
                 }
                 Console.WriteLine("0: Go Back");
-                int choice;
-                bool valid;
-                do
+
+                int input = validatedInputInteger("store choice", locations.Count());
+                if (input == 0)
                 {
-                    valid = Int32.TryParse(Console.ReadLine(), out choice);
-                    Console.WriteLine(choice);
-                    valid = valid && (choice < locations.Count());
-                    if (!valid)
-                    {
-                        Console.WriteLine("Please input a valid option.");
-                    }
-                    else if (choice == 0)
-                    {
-                        return;
-                    }
-                } while (!valid);
-                search(locations[choice - 1].LocationId);
+                    return;
+                }
+                search(locations[input - 1].LocationId);
             }
             
         }
@@ -101,18 +90,7 @@ namespace p0
                     }
                     else
                     {
-                        Console.Write("Select quantity: ");
-                        int selectedQuantity;
-                        do
-                        {
-                            valid = Int32.TryParse(Console.ReadLine(), out selectedQuantity);
-                            valid = valid && (selectedQuantity <= selectedProduct.quantity);
-                            if (!valid)
-                            {
-                                Console.WriteLine("Please input a valid option.");
-                            }
-                        } while (!valid);
-
+                        int selectedQuantity = validatedInputInteger("quantity", selectedProduct.quantity + 1);
                         if (selectedQuantity > 0)
                         {
                             // Check if there is an existing order item for this product...
@@ -154,6 +132,25 @@ namespace p0
                     Console.WriteLine("Placed Order: {0} for {1} under Customer: {2} {3} at {4}", order.OrderId, order.total, customer.firstName, customer.lastName, order.orderDate);
                 }
             }
+        }
+        private int validatedInputInteger(string prompt, int limit)
+        {
+            int choice;
+            bool valid;
+            do
+            {
+                Console.WriteLine("Please input " + prompt);
+                valid = Int32.TryParse(Console.ReadLine(), out choice);
+                if (!valid || (choice > limit))
+                {
+                    Console.WriteLine("Please input a valid option.");
+                }
+                else
+                {
+                    return choice;
+                }
+            } while (!valid);
+            return 0;
         }
     }
 }
