@@ -6,7 +6,7 @@ using System.Text;
 
 namespace p0
 {
-    class Order
+    public class Order
     {
         public string OrderId { get; set; }
         public string CustomerId { get; set; }

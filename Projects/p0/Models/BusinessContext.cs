@@ -5,7 +5,7 @@ using System.Text;
 
 namespace p0
 {
-    class BusinessContext : DbContext
+    public class BusinessContext : DbContext
     {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Inventory> Inventory { get; set; }

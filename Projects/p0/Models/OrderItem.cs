@@ -4,7 +4,7 @@ using System.Text;
 
 namespace p0
 {
-    class OrderItem
+    public class OrderItem
     {
         public string OrderItemId { get; set; }
         public string OrderId { get; set; }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace p0
 {
-    class Customer
+    public class Customer
     {
         public string CustomerId { get; set; }
         public string firstName { get; set; }
