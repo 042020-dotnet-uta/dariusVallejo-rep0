@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace p0
 {
@@ -157,30 +154,6 @@ namespace p0
                     Console.WriteLine("Placed Order: {0} for {1} under Customer: {2} {3} at {4}", order.OrderId, order.total, customer.firstName, customer.lastName, order.orderDate);
                 }
             }
-        }
-
-        public void print()
-        {
-            using (var bc = new BusinessContext())
-            {
-                var result = bc.Orders.Where(o => o.CustomerId == customer.CustomerId).ToList();
-                if (result.Count == 0)
-                {
-                    Console.WriteLine("No results found.");
-                } else
-                {
-                    foreach (var r in result)
-                    {
-                        Console.WriteLine(r.ToString());
-                    }
-                }
-                
-            }
-        }
-
-        private int validatedValueInput(int prompt)
-        {
-            return 0;
         }
     }
 }

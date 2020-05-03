@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace p0
 {
@@ -24,6 +22,14 @@ namespace p0
                 string customerId = bc.Customers.Where(c => (c.firstName == firstName && c.lastName == lastName)).FirstOrDefault().CustomerId;
                 List<Order> orders = bc.Orders.Where(o => o.CustomerId == customerId).ToList();
                 return orders;
+            }
+        }
+
+        public List<Customer> customersLike(string firstName, string lastName)
+        {
+            using (var bc = new BusinessContext())
+            {
+                return bc.Customers.Where(c => (c.firstName.Contains(firstName) || c.lastName.Contains(lastName))).ToList();
             }
         }
 

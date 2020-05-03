@@ -33,12 +33,15 @@ namespace p0
                     switch (choice)
                     {
                         case 1:
-                            CustomerManager cm = new CustomerManager(validatedInputString("First Name"), validatedInputString("Last Name"));
-                            customer = cm.build();
+                            CustomerManager cm = new CustomerManager();
+                            customer = cm.build(validatedInputString("First Name"), validatedInputString("Last Name"));
                             break;
                         case 2:
-                            CustomerManager cm2 = new CustomerManager(validatedInputString("First Name"), validatedInputString("Last Name"));
-                            cm2.search();
+                            var customers = info.customersLike(validatedInputString("First Name"), validatedInputString("Last Name"));
+                            foreach (var c in customers)
+                            {
+                                Console.WriteLine(c.ToString());
+                            }
                             break;
                         case 3:
                             var details = info.orderDetails(validatedInputString("order id"));
@@ -48,8 +51,7 @@ namespace p0
                             }
                             break;
                         case 4:
-                            string locationName = validatedInputString("store location name");
-                            var result = info.locationDetails(locationName);
+                            var result = info.locationDetails(validatedInputString("store location name"));
                             foreach (var r in result)
                             {
                                 Console.WriteLine(r.ToString());
@@ -61,7 +63,6 @@ namespace p0
                             {
                                 Console.WriteLine(o.ToString());
                             }
-
                             break;
                         case 6:
                             if (customer == null)
