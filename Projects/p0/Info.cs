@@ -5,7 +5,7 @@ namespace p0
 {
     class Info
     {
-        public List<Order> locationDetails(string locationName)
+        public static List<Order> locationDetails(string locationName)
         {
             using (var bc = new BusinessContext())
             {
@@ -15,7 +15,7 @@ namespace p0
             }
         }
 
-        public List<Order> customerOrders(string firstName, string lastName)
+        public static List<Order> customerOrders(string firstName, string lastName)
         {
             using (var bc = new BusinessContext())
             {
@@ -25,7 +25,7 @@ namespace p0
             }
         }
 
-        public List<Customer> customersLike(string firstName, string lastName)
+        public static List<Customer> customersLike(string firstName, string lastName)
         {
             using (var bc = new BusinessContext())
             {
@@ -33,7 +33,7 @@ namespace p0
             }
         }
 
-        public List<OrderItem> orderDetails(string orderId)
+        public static List<OrderItem> orderDetails(string orderId)
         {
             using (var bc = new BusinessContext())
             {
