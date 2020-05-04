@@ -11,10 +11,18 @@ namespace p0
         {
             using (var bc = new BusinessContext())
             {
-                Customer customer = new Customer { CustomerId = Guid.NewGuid().ToString(), firstName = firstName, lastName = lastName, orders = new List<Order>() };
-                bc.Customers.Add(customer);
-                bc.SaveChanges();
-                return customer;
+                Customer customer = bc.Customers.Where(c => (c.firstName == firstName) && (c.lastName == lastName)).Include(c => c.orders).FirstOrDefault();
+                if (customer == null)
+                {
+                    customer = new Customer { CustomerId = Guid.NewGuid().ToString(), firstName = firstName, lastName = lastName, orders = new List<Order>() };
+                    bc.Customers.Add(customer);
+                    bc.SaveChanges();
+                    return customer;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 

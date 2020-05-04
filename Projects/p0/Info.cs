@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace p0
@@ -15,11 +17,10 @@ namespace p0
             }
         }
 
-        public static List<Order> customerOrders(string firstName, string lastName)
+        public static List<Order> customerOrders(string customerId)
         {
             using (var bc = new BusinessContext())
             {
-                string customerId = bc.Customers.Where(c => (c.firstName == firstName && c.lastName == lastName)).FirstOrDefault().CustomerId;
                 List<Order> orders = bc.Orders.Where(o => o.CustomerId == customerId).ToList();
                 return orders;
             }
@@ -33,11 +34,27 @@ namespace p0
             }
         }
 
-        public static List<OrderItem> orderDetails(string orderId)
+        public static List<OrderItem> orderDetails(string orderId, string customerId)
         {
             using (var bc = new BusinessContext())
             {
-                return bc.OrderItems.Where(oi => oi.OrderId == orderId).ToList();
+                List<OrderItem> orderItems;
+                if (customerId != null)
+                {
+                    Order orders = bc.Orders.Where(o => o.OrderId == orderId && o.CustomerId == customerId).Include(o => o.orderItems).FirstOrDefault();
+                    if (orders == null)
+                    {
+                        orderItems = null;
+                    } else
+                    {
+                        orderItems = orders.orderItems;
+                    }
+                }
+                else
+                {
+                    orderItems = bc.OrderItems.Where(oi => oi.OrderId == orderId).ToList();
+                }
+                return orderItems;
             }
         }
     }

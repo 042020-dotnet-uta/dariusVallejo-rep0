@@ -11,7 +11,6 @@ namespace p0
     {
         public List<string> options { get; set; }
 
-
         public BaseUI()
         {
             Console.Clear();
@@ -65,7 +64,7 @@ namespace p0
                     }
                     break;
                 case 3:
-                    var details = Info.orderDetails(Prompter.validatedInputString("order id"));
+                    var details = Info.orderDetails(Prompter.validatedInputString("order id"), null);
                     foreach (var detail in details)
                     {
                         Console.WriteLine(detail.ToString());
@@ -79,23 +78,15 @@ namespace p0
                     }
                     break;
                 case 5:
-                    var orders = Info.customerOrders(Prompter.validatedInputString("First Name"), Prompter.validatedInputString("Last Name")).ToList();
+                    var orders = Info.customerOrders(null);
                     foreach (var o in orders)
                     {
                         Console.WriteLine(o.ToString());
                     }
                     break;
                 case 6:
-                    /*if (customer == null)
-                    {
-                        Console.WriteLine("You must be logged in to do that. ");
-                    }
-                    else
-                    {
-                        OrderManager om6 = new OrderManager(customer);
-                        om6.prompt();
-                    }
-                    break;*/
+                    Console.WriteLine("You must be logged in to do that. ")
+                    break;
                 default:
                     Console.WriteLine("Please select a valid option");
                     break;

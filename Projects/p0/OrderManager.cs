@@ -7,7 +7,6 @@ namespace p0
     class OrderManager
     {
         private Customer customer;
-
         public OrderManager(Customer customer)
         {
             this.customer = customer;

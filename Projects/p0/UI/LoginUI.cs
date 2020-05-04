@@ -49,11 +49,23 @@ namespace p0.UI
             {
                 case 1:
                     Customer returnCustomer = new CustomerManager().login(Prompter.validatedInputString("First Name"), Prompter.validatedInputString("Last Name"));
-                    new CustomerUI(returnCustomer).prompt();
+                    if (returnCustomer == null)
+                    {
+                        Console.WriteLine("Invalid login");
+                    } else
+                    {
+                        new CustomerUI(returnCustomer).prompt();
+                    }
                     break;
                 case 2:
                     Customer newCustomer = new CustomerManager().create(Prompter.validatedInputString("First Name"), Prompter.validatedInputString("Last Name"));
-                    new CustomerUI(newCustomer).prompt();
+                    if (newCustomer == null)
+                    {
+                        Console.WriteLine("Customer already exists");
+                    } else
+                    {
+                        new CustomerUI(newCustomer).prompt();
+                    }
                     break;
                 default:
                     Console.WriteLine("Please select a valid option");
