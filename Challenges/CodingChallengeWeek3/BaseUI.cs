@@ -1,8 +1,7 @@
-﻿using CodingChallengeWeek3;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace p0
+namespace CodingChallengeWeek3
 {
     /// <summary>
     /// Basic UI for presenting options, ferrying selections
