@@ -85,7 +85,7 @@ namespace p0
                     }
                     break;
                 case 6:
-                    Console.WriteLine("You must be logged in to do that. ")
+                    Console.WriteLine("You must be logged in to do that. ");
                     break;
                 default:
                     Console.WriteLine("Please select a valid option");
