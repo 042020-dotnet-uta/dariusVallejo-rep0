@@ -14,9 +14,10 @@ namespace p0
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Inventory> Inventory { get; set; }
+        public DbSet<Location> Locations { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Location> Locations { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

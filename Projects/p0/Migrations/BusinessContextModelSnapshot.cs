@@ -20,10 +20,10 @@ namespace p0.Migrations
                     b.Property<string>("CustomerId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("firstName")
+                    b.Property<string>("FirstName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("lastName")
+                    b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("CustomerId");
@@ -39,18 +39,17 @@ namespace p0.Migrations
                     b.Property<string>("LocationId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("productName")
+                    b.Property<string>("ProductId")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("productPrice")
-                        .HasColumnType("REAL");
-
-                    b.Property<int>("quantity")
+                    b.Property<int>("Quantity")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("InventoryId");
 
                     b.HasIndex("LocationId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Inventory");
                 });
@@ -60,7 +59,7 @@ namespace p0.Migrations
                     b.Property<string>("LocationId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("locationName")
+                    b.Property<string>("LocationName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("LocationId");
@@ -79,10 +78,10 @@ namespace p0.Migrations
                     b.Property<string>("LocationId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("orderDate")
+                    b.Property<string>("OrderDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("total")
+                    b.Property<float>("Total")
                         .HasColumnType("REAL");
 
                     b.HasKey("OrderId");
@@ -100,10 +99,10 @@ namespace p0.Migrations
                     b.Property<string>("OrderId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ProductName")
+                    b.Property<string>("ProductId")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("quantity")
+                    b.Property<int>("Quantity")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("OrderItemId");
@@ -113,24 +112,44 @@ namespace p0.Migrations
                     b.ToTable("OrderItems");
                 });
 
+            modelBuilder.Entity("p0.Product", b =>
+                {
+                    b.Property<string>("ProductId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("ProductPrice")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("p0.Inventory", b =>
                 {
                     b.HasOne("p0.Location", null)
-                        .WithMany("inventory")
+                        .WithMany("Inventories")
                         .HasForeignKey("LocationId");
+
+                    b.HasOne("p0.Product", null)
+                        .WithMany("Inventories")
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("p0.Order", b =>
                 {
                     b.HasOne("p0.Customer", null)
-                        .WithMany("orders")
+                        .WithMany("Orders")
                         .HasForeignKey("CustomerId");
                 });
 
             modelBuilder.Entity("p0.OrderItem", b =>
                 {
                     b.HasOne("p0.Order", null)
-                        .WithMany("orderItems")
+                        .WithMany("OrderItems")
                         .HasForeignKey("OrderId");
                 });
 #pragma warning restore 612, 618

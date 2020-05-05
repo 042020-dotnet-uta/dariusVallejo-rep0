@@ -3,9 +3,10 @@
     public class Inventory
     {
         public string InventoryId { get; set; }
+        public int Quantity { get; set; }
+
+        // FK(s)
         public string LocationId { get; set; }
-        public string productName { get; set; }
-        public float productPrice { get; set; }
-        public int quantity { get; set; }
+        public string ProductId { get; set; }
     }
 }

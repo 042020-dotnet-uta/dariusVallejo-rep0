@@ -16,10 +16,10 @@ namespace p0
 
         public Customer create(string firstName, string lastName)
         {
-            Customer customer = bc.Customers.Where(c => (c.firstName == firstName) && (c.lastName == lastName)).Include(c => c.orders).FirstOrDefault();
+            Customer customer = bc.Customers.Where(c => (c.FirstName == firstName) && (c.LastName == lastName)).Include(c => c.Orders).FirstOrDefault();
             if (customer == null)
             {
-                customer = new Customer { CustomerId = Guid.NewGuid().ToString(), firstName = firstName, lastName = lastName, orders = new List<Order>() };
+                customer = new Customer { CustomerId = Guid.NewGuid().ToString(), FirstName = firstName, LastName = lastName, Orders = new List<Order>() };
                 bc.Customers.Add(customer);
                 bc.SaveChanges();
                 return customer;
@@ -32,7 +32,7 @@ namespace p0
 
         public Customer login(string firstName, string lastName)
         {
-            Customer customer = bc.Customers.Where(c => (c.firstName == firstName) && (c.lastName == lastName)).Include(c => c.orders).FirstOrDefault();
+            Customer customer = bc.Customers.Where(c => (c.FirstName == firstName) && (c.LastName == lastName)).Include(c => c.Orders).FirstOrDefault();
             return customer;
         }
     }

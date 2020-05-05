@@ -18,7 +18,7 @@ namespace p0_test
                 Location location = new Location()
                 {
                     LocationId = "some-location-id",
-                    locationName = "some-location-name",
+                    LocationName = "some-location-name",
                 };
                 bc.Orders.Add(new Order() { OrderId = "some-order-id", LocationId = "some-location-id" });
                 bc.Orders.Add(new Order() { OrderId = "another-order-id", LocationId = "some-location-id" });
@@ -42,7 +42,7 @@ namespace p0_test
                 Location location = new Location()
                 {
                     LocationId = "some-location-id",
-                    locationName = "some-location-name",
+                    LocationName = "some-location-name",
                 };
                 bc.Locations.Add(location);
                 bc.SaveChanges();
@@ -105,8 +105,8 @@ namespace p0_test
                 .Options;
             using (var bc = new BusinessContext(options))
             {
-                Customer customerA = new Customer { CustomerId = "some-customer-id", firstName = "New", lastName = "Customer" };
-                Customer customerB = new Customer { CustomerId = "another-customer-id", firstName = "Another", lastName = "Customer" };
+                Customer customerA = new Customer { CustomerId = "some-customer-id", FirstName = "New", LastName = "Customer" };
+                Customer customerB = new Customer { CustomerId = "another-customer-id", FirstName = "Another", LastName = "Customer" };
                 bc.Customers.Add(customerA);
                 bc.Customers.Add(customerB);
                 bc.SaveChanges();
@@ -130,7 +130,7 @@ namespace p0_test
             {
                 string customerId = "some-customer-id";
                 string orderId = "some-order-id";
-                Customer customer = new Customer() { CustomerId = customerId, firstName = "New", lastName = "Customer" };
+                Customer customer = new Customer() { CustomerId = customerId, FirstName = "New", LastName = "Customer" };
                 OrderItem orderItemA = new OrderItem() { OrderItemId = "some-item-id", OrderId = orderId };
                 OrderItem orderItemB = new OrderItem() { OrderItemId = "another-item-id", OrderId = orderId };
                 Order order = new Order() { OrderId = orderId, CustomerId = customerId };

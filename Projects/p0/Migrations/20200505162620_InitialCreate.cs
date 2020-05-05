@@ -11,8 +11,8 @@ namespace p0.Migrations
                 columns: table => new
                 {
                     CustomerId = table.Column<string>(nullable: false),
-                    firstName = table.Column<string>(nullable: true),
-                    lastName = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -24,7 +24,7 @@ namespace p0.Migrations
                 columns: table => new
                 {
                     LocationId = table.Column<string>(nullable: false),
-                    locationName = table.Column<string>(nullable: true)
+                    LocationName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,14 +32,27 @@ namespace p0.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    ProductId = table.Column<string>(nullable: false),
+                    ProductName = table.Column<string>(nullable: true),
+                    ProductPrice = table.Column<float>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.ProductId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
                     OrderId = table.Column<string>(nullable: false),
+                    Total = table.Column<float>(nullable: false),
+                    OrderDate = table.Column<string>(nullable: true),
                     CustomerId = table.Column<string>(nullable: true),
-                    LocationId = table.Column<string>(nullable: true),
-                    total = table.Column<float>(nullable: false),
-                    orderDate = table.Column<string>(nullable: true)
+                    LocationId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -57,10 +70,9 @@ namespace p0.Migrations
                 columns: table => new
                 {
                     InventoryId = table.Column<string>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
                     LocationId = table.Column<string>(nullable: true),
-                    productName = table.Column<string>(nullable: true),
-                    productPrice = table.Column<float>(nullable: false),
-                    quantity = table.Column<int>(nullable: false)
+                    ProductId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,6 +83,12 @@ namespace p0.Migrations
                         principalTable: "Locations",
                         principalColumn: "LocationId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Inventory_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,8 +97,8 @@ namespace p0.Migrations
                 {
                     OrderItemId = table.Column<string>(nullable: false),
                     OrderId = table.Column<string>(nullable: true),
-                    ProductName = table.Column<string>(nullable: true),
-                    quantity = table.Column<int>(nullable: false)
+                    ProductId = table.Column<string>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -97,6 +115,11 @@ namespace p0.Migrations
                 name: "IX_Inventory_LocationId",
                 table: "Inventory",
                 column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Inventory_ProductId",
+                table: "Inventory",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
@@ -119,6 +142,9 @@ namespace p0.Migrations
 
             migrationBuilder.DropTable(
                 name: "Locations");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Orders");

@@ -15,7 +15,7 @@ namespace p0
         public List<Order> locationDetails(string locationName)
         {
             List<Order> orders;
-            Location location = bc.Locations.Where(l => l.locationName == locationName).FirstOrDefault();
+            Location location = bc.Locations.Where(l => l.LocationName == locationName).FirstOrDefault();
             if (location != null)
             {
                 orders = bc.Orders.Where(o => o.LocationId == location.LocationId).ToList();
@@ -43,7 +43,7 @@ namespace p0
 
         public List<Customer> customersLike(string firstName, string lastName)
         {
-            return bc.Customers.Where(c => (c.firstName.Contains(firstName) || c.lastName.Contains(lastName))).ToList();
+            return bc.Customers.Where(c => (c.FirstName.Contains(firstName) || c.LastName.Contains(lastName))).ToList();
         }
 
         public List<OrderItem> orderDetails(string orderId, string customerId)
@@ -51,10 +51,10 @@ namespace p0
             List<OrderItem> orderItems;
             if (customerId != null)
             {
-                Order orders = bc.Orders.Where(o => o.OrderId == orderId && o.CustomerId == customerId).Include(o => o.orderItems).FirstOrDefault();
+                Order orders = bc.Orders.Where(o => o.OrderId == orderId && o.CustomerId == customerId).Include(o => o.OrderItems).FirstOrDefault();
                 if (orders != null)
                 {
-                    orderItems = orders.orderItems;
+                    orderItems = orders.OrderItems;
                 }
                 else
                 {

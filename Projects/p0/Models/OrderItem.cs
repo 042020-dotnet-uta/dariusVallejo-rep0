@@ -8,11 +8,11 @@ namespace p0
     {
         public string OrderItemId { get; set; }
         public string OrderId { get; set; }
-        public string ProductName { get; set; }
-        public int quantity { get; set; }
+        public string ProductId { get; set; }
+        public int Quantity { get; set; }
 
         public override string ToString() { 
-            return OrderItemId + " " + OrderId + " " + ProductName + " " + quantity;
+            return OrderItemId + " " + OrderId + " " + ProductId + " " + Quantity;
         }
     }
 }

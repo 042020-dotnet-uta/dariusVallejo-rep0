@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,7 +22,7 @@ namespace p0
             List<Location> locations = bc.Locations.ToList();
             for (int i = 0; i < locations.Count(); i++)
             {
-                Console.WriteLine("{0}: {1}", (i + 1), locations[i].LocationId);
+                Console.WriteLine("{0}: {1}", (i + 1), locations[i].LocationName);
             }
             Console.WriteLine("0: Go Back");
 
@@ -36,6 +37,7 @@ namespace p0
         public void search(string locationId)
         {
             List<Inventory> inventories = bc.Inventory.ToList();
+            List<Product> products = bc.Products.ToList();
             string orderId = Guid.NewGuid().ToString();
 
             Order order = new Order()
@@ -43,35 +45,39 @@ namespace p0
                 OrderId = orderId,
                 CustomerId = customer.CustomerId,
                 LocationId = locationId,
-                orderItems = new List<OrderItem>(),
-                total = 0
+                OrderItems = new List<OrderItem>(),
+                Total = 0
             };
-
 
             while (true)
             {
-                var availableInventory = inventories.Where(i => i.LocationId.Equals(locationId)).ToList();
-                for (int i = 0; i < availableInventory.Count(); i++)
+                var available = inventories.Where(i => i.LocationId.Equals(locationId)).ToList();
+                Inventory inventory;
+                Product product;
+                for (int i = 0; i < available.Count(); i++)
                 {
-                    var inventory = availableInventory[i];
-                    Console.WriteLine("{0} : {1} : {2} : {3}", i + 1, inventory.productName, inventory.productPrice, inventory.quantity);
-
+                    inventory = available[i];
+                    product = products.Where(p => p.ProductId == inventory.ProductId).FirstOrDefault();
+                    Console.WriteLine("{0} : {1} : {2} : {3}", i + 1, product.ProductName, product.ProductPrice, inventory.Quantity);
                 }
                 Console.WriteLine("0 : Finish");
 
-                int index = Prompter.validatedInputInteger("selection", availableInventory.Count());
+                int index = Prompter.validatedInputInteger("selection", available.Count());
                 if (index == 0)
                 {
                     break;
 
                 }
-                Inventory selectedProduct = availableInventory[index - 1];
 
-                int selectedQuantity = Prompter.validatedInputInteger("quantity", selectedProduct.quantity + 1);
-                if (selectedQuantity > 0)
+                // new method?
+                inventory = available[index - 1];
+                product = products.Where(p => p.ProductId == inventory.ProductId).FirstOrDefault(); 
+
+                int quantity = Prompter.validatedInputInteger("quantity", inventory.Quantity);
+                if (quantity > 0)
                 {
                     // Check if there is an existing order item for this product...
-                    OrderItem orderItem = order.orderItems.Where(oi => (oi.OrderId == orderId) && (oi.ProductName == selectedProduct.productName)).FirstOrDefault();
+                    OrderItem orderItem = order.OrderItems.Where(oi => (oi.OrderId == orderId) && (oi.ProductId == product.ProductId)).FirstOrDefault();
 
                     // If there isn't, create one
                     if (orderItem == null)
@@ -80,32 +86,32 @@ namespace p0
                         {
                             OrderItemId = Guid.NewGuid().ToString(),
                             OrderId = orderId,
-                            ProductName = selectedProduct.productName,
-                            quantity = selectedQuantity
+                            ProductId = product.ProductId,
+                            Quantity = quantity
                         };
-                        order.orderItems.Add(orderItem);
+                        order.OrderItems.Add(orderItem);
                         bc.OrderItems.Add(orderItem);
                     }
 
                     // Otherwise, just update the quantity of the order item
                     else
                     {
-                        orderItem.quantity = orderItem.quantity + selectedQuantity;
+                        orderItem.Quantity = orderItem.Quantity + quantity;
                     }
-                    order.total = order.total + (selectedQuantity * selectedProduct.productPrice);
-                    selectedProduct.quantity = selectedProduct.quantity - selectedQuantity;
-                    bc.Update(selectedProduct);
+                    order.Total = order.Total + (quantity * product.ProductPrice);
+                    inventory.Quantity = inventory.Quantity - quantity;
+                    bc.Update(inventory);
                 }
             }
 
             // If we've added items to our order...
-            if (order.orderItems.Count > 0)
+            if (order.OrderItems.Count > 0)
             {
-                order.orderDate = DateTime.Now.ToString();
-                customer.orders.Add(order);
+                order.OrderDate = DateTime.Now.ToString();
+                customer.Orders.Add(order);
                 bc.Add(order);
                 bc.SaveChanges();
-                Console.WriteLine("Placed Order: {0} for {1} under Customer: {2} {3} at {4}", order.OrderId, order.total, customer.firstName, customer.lastName, order.orderDate);
+                Console.WriteLine("Placed Order: {0} for {1} under Customer: {2} {3} at {4}", order.OrderId, order.Total, customer.FirstName, customer.LastName, order.OrderDate);
             }
             prompt();
         }

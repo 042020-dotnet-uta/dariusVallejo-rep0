@@ -17,7 +17,7 @@ namespace p0_test
                 CustomerManager manager = new CustomerManager(new BusinessContext(options));
                 Customer created = manager.create("New", "Customer");
                 Assert.NotNull(created);
-                Assert.Equal("New", created.firstName);
+                Assert.Equal("New", created.FirstName);
             }
         }
 
@@ -32,7 +32,7 @@ namespace p0_test
                 CustomerManager manager = new CustomerManager(bc);
                 Customer created = manager.create("New", "Customer");
                 Assert.NotNull(created);
-                Assert.Equal("New", created.firstName);
+                Assert.Equal("New", created.FirstName);
 
                 Customer login = manager.login("New", "Customer");
                 Assert.NotNull(login);
@@ -52,7 +52,7 @@ namespace p0_test
                 CustomerManager manager = new CustomerManager(bc);
                 Customer created = manager.create("New", "Customer");
                 Assert.NotNull(created);
-                Assert.Equal("New", created.firstName);
+                Assert.Equal("New", created.FirstName);
 
                 Customer missing = manager.login("Missing", "Customer");
                 Assert.Null(missing);
