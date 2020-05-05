@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace p0
 {
-    class InfoManager
+    public class InfoManager
     {
         private BusinessContext bc;
 
@@ -15,8 +14,15 @@ namespace p0
         }
         public List<Order> locationDetails(string locationName)
         {
-            string locationId = bc.Locations.Where(l => l.locationName == locationName).FirstOrDefault().LocationId;
-            List<Order> orders = bc.Orders.Where(o => o.LocationId == locationId).ToList();
+            List<Order> orders;
+            Location location = bc.Locations.Where(l => l.locationName == locationName).FirstOrDefault();
+            if (location == null)
+            {
+                orders = null;
+            } else
+            {
+                orders = bc.Orders.Where(o => o.LocationId == location.LocationId).ToList();
+            }
             return orders;
         }
 

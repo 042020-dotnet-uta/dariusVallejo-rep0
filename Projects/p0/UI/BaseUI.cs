@@ -1,11 +1,7 @@
-﻿using p0.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 
-namespace p0
+namespace p0.UI
 {
     class BaseUI : UserInterface
     {
