@@ -8,6 +8,7 @@ namespace p0
     {
         static void Main(string[] args)
         {
+            var bc = new BusinessContext(); // ???
             new BaseUI().prompt();
         }
     }

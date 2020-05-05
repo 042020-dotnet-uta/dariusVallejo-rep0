@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace p0.UI
 {
@@ -47,38 +46,43 @@ namespace p0.UI
 
         public void select(int choice)
         {
-            switch (choice)
+            using (var bc = new BusinessContext())
             {
-                case 1:
-                    // Place an order
-                    OrderManager manager = new OrderManager(customer);
-                    manager.prompt();
-                    break;
-                case 2:
-                    // Order History
-                    var orders = Info.customerOrders(customer.CustomerId);
-                    foreach (var o in orders)
-                    {
-                        Console.WriteLine(o.ToString());
-                    }
-                    break;
-                case 3:
-                    // Order Details
-                    var details = Info.orderDetails(Prompter.InputString("order id"), customer.CustomerId);
-                    if (details != null)
-                    {
-                        foreach (var detail in details)
+                InfoManager infoManager = new InfoManager(bc);
+                switch (choice)
+                {
+                    case 1:
+                        // Place an order
+                        OrderManager manager = new OrderManager(customer, bc);
+                        manager.prompt();
+                        break;
+                    case 2:
+                        // Order History
+                        var orders = infoManager.customerOrders(customer.CustomerId);
+                        foreach (var o in orders)
                         {
-                            Console.WriteLine(detail.ToString());
+                            Console.WriteLine(o.ToString());
                         }
-                    } else
-                    {
-                        Console.WriteLine("Please input valid order ID");
-                    }
-                    break;
-                default:
-                    Console.WriteLine("Please select a valid option");
-                    break;
+                        break;
+                    case 3:
+                        // Order Details
+                        var details = infoManager.orderDetails(Prompter.InputString("order id"), customer.CustomerId);
+                        if (details != null)
+                        {
+                            foreach (var detail in details)
+                            {
+                                Console.WriteLine(detail.ToString());
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please input valid order ID");
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("Please select a valid option");
+                        break;
+                }
             }
         }
     }

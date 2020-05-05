@@ -45,31 +45,36 @@ namespace p0.UI
 
         public void select(int choice)
         {
-            switch (choice)
+            using (var bc = new BusinessContext())
             {
-                case 1:
-                    Customer returnCustomer = new CustomerManager().login(Prompter.validatedInputString("First Name"), Prompter.validatedInputString("Last Name"));
-                    if (returnCustomer == null)
-                    {
-                        Console.WriteLine("Invalid login");
-                    } else
-                    {
-                        new CustomerUI(returnCustomer).prompt();
-                    }
-                    break;
-                case 2:
-                    Customer newCustomer = new CustomerManager().create(Prompter.validatedInputString("First Name"), Prompter.validatedInputString("Last Name"));
-                    if (newCustomer == null)
-                    {
-                        Console.WriteLine("Customer already exists");
-                    } else
-                    {
-                        new CustomerUI(newCustomer).prompt();
-                    }
-                    break;
-                default:
-                    Console.WriteLine("Please select a valid option");
-                    break;
+                switch (choice)
+                {
+                    case 1:
+                        Customer returnCustomer = new CustomerManager(bc).login(Prompter.validatedInputString("First Name"), Prompter.validatedInputString("Last Name"));
+                        if (returnCustomer == null)
+                        {
+                            Console.WriteLine("Invalid login");
+                        }
+                        else
+                        {
+                            new CustomerUI(returnCustomer).prompt();
+                        }
+                        break;
+                    case 2:
+                        Customer newCustomer = new CustomerManager(bc).create(Prompter.validatedInputString("First Name"), Prompter.validatedInputString("Last Name"));
+                        if (newCustomer == null)
+                        {
+                            Console.WriteLine("Customer already exists");
+                        }
+                        else
+                        {
+                            new CustomerUI(newCustomer).prompt();
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("Please select a valid option");
+                        break;
+                }
             }
         }
     }
