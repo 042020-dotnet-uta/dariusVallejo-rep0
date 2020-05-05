@@ -16,19 +16,28 @@ namespace p0
         {
             List<Order> orders;
             Location location = bc.Locations.Where(l => l.locationName == locationName).FirstOrDefault();
-            if (location == null)
-            {
-                orders = null;
-            } else
+            if (location != null)
             {
                 orders = bc.Orders.Where(o => o.LocationId == location.LocationId).ToList();
+            } else
+            {
+                orders = null;
             }
             return orders;
         }
 
         public List<Order> customerOrders(string customerId)
         {
-            List<Order> orders = bc.Orders.Where(o => o.CustomerId == customerId).ToList();
+            List<Order> orders;
+            Customer customer = bc.Customers.Where(c => c.CustomerId == customerId).FirstOrDefault();
+            if (customer != null)
+            {
+                orders = bc.Orders.Where(o => o.CustomerId == customer.CustomerId).ToList();
+            }
+            else
+            {
+                orders = null;
+            }
             return orders;
         }
 
@@ -43,13 +52,13 @@ namespace p0
             if (customerId != null)
             {
                 Order orders = bc.Orders.Where(o => o.OrderId == orderId && o.CustomerId == customerId).Include(o => o.orderItems).FirstOrDefault();
-                if (orders == null)
+                if (orders != null)
                 {
-                    orderItems = null;
+                    orderItems = orders.orderItems;
                 }
                 else
                 {
-                    orderItems = orders.orderItems;
+                    orderItems = null;
                 }
             }
             else
