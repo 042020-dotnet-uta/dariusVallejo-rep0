@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace p0.UI
 {
@@ -16,7 +17,6 @@ namespace p0.UI
         /// </summary>
         public BaseUI()
         {
-            Console.Clear();
             build();
         }
 
@@ -73,6 +73,12 @@ namespace p0.UI
                         var customer = infoManager.customersLike(Prompter.validatedInputString("First Name"), Prompter.validatedInputString("Last Name"));
                         if (customer != null)
                         {
+                            var columns = typeof(Customer).GetProperties().Select(property => property.Name).ToList();
+                            for (int i = 0; i < columns.Count - 1; i++) 
+                            {
+                                Console.Write("{0} ", columns[i]);
+                            }
+                            Console.WriteLine();
                             Console.WriteLine(customer.ToString());
                         }
                         else
@@ -84,6 +90,13 @@ namespace p0.UI
                         var result = infoManager.locationDetails(Prompter.validatedInputString("store location name"));
                         if (result != null)
                         {
+                            var columns = typeof(Order).GetProperties().Select(property => property.Name).ToList();
+                            for (int i = 0; i < columns.Count - 1; i++) 
+                            {
+                                Console.Write("{0} ", columns[i]);
+                            }
+                            Console.WriteLine();
+
                             foreach (var r in result)
                             {
                                 Console.WriteLine(r.ToString());

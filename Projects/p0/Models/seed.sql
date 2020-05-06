@@ -1,6 +1,9 @@
 ﻿delete from Locations;
 delete from Products;
 delete from Inventory;
+delete from Customers;
+delete from Orders;
+delete from OrderItems;
 
 Insert into Locations (
 LocationId,
@@ -40,5 +43,3 @@ VALUES
 ("7", 3, "ttt", "eee"),
 ("8", 3, "ttt", "fff"),
 ("9", 3, "ttt", "zzz");
-
-

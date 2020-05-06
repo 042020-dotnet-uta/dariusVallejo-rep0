@@ -16,7 +16,6 @@ namespace p0.UI
         /// </summary>
         public LoginUI()
         {
-            Console.Clear();
             build();
         }
 

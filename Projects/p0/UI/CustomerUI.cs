@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace p0.UI
 {
@@ -18,7 +19,6 @@ namespace p0.UI
         /// <param name="customer">The customer object representing the user after login</param>
         public CustomerUI(Customer customer)
         {
-            Console.Clear();
             build();
             this.customer = customer;
         }
@@ -77,9 +77,21 @@ namespace p0.UI
                     case 2:
                         // Order History
                         var orders = infoManager.customerOrders(customer.CustomerId);
-                        foreach (var o in orders)
+                        if (orders.Count > 0)
                         {
-                            Console.WriteLine(o.ToString());
+                            var columns = typeof(Order).GetProperties().Select(property => property.Name).ToList();
+                            for (int i = 0; i < columns.Count - 1; i++)
+                            {
+                                Console.Write("{0} ", columns[i]);
+                            }
+                            Console.WriteLine();
+                            foreach (var o in orders)
+                            {
+                                Console.WriteLine(o.ToString());
+                            }
+                        } else
+                        {
+                            Console.WriteLine("No results found");
                         }
                         break;
                     case 3:
@@ -87,6 +99,12 @@ namespace p0.UI
                         var details = infoManager.orderDetails(Prompter.InputString("order id"), customer.CustomerId);
                         if (details != null)
                         {
+                            var columns = typeof(OrderItem).GetProperties().Select(property => property.Name).ToList();
+                            for (int i = 0; i < columns.Count; i++)
+                            {
+                                Console.Write("{0} ", columns[i]);
+                            }
+                            Console.WriteLine();
                             foreach (var detail in details)
                             {
                                 Console.WriteLine(detail.ToString());

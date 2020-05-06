@@ -23,7 +23,7 @@ namespace p0
         /// <returns>A string containing model values</returns>
         public override string ToString()
         {
-            return OrderId + " " + CustomerId + " " + LocationId + " " + Total + " " + OrderDate; 
+            return OrderId + " " + Total + " " + OrderDate + " " + CustomerId + " " + LocationId; 
         }
     }
 }

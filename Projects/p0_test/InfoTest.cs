@@ -112,11 +112,9 @@ namespace p0_test
                 bc.SaveChanges();
 
                 InfoManager infoManager = new InfoManager(bc);
-                List<Customer> customers = infoManager.customersLike("n", "Customer");
-                List<Customer> empty = infoManager.customersLike("Mfx", "Dvtupnfs");
+                Customer customer = infoManager.customersLike("New", "Customer");
 
-                Assert.Equal(2, customers.Count);
-                Assert.Empty(empty);
+                Assert.NotNull(customer);
             }
         }
 
