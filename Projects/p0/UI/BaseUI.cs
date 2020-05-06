@@ -3,16 +3,26 @@ using System.Collections.Generic;
 
 namespace p0.UI
 {
+    /// <summary>
+    /// Main UI, offers standard options and is last stop before exit
+    /// </summary>
     class BaseUI : UserInterface
     {
+        // Options list public due to interface
         public List<string> options { get; set; }
 
+        /// <summary>
+        /// Sets up the user interface console
+        /// </summary>
         public BaseUI()
         {
             Console.Clear();
             build();
         }
 
+        /// <summary>
+        /// Populates the the list with standard options (login, etc.) 
+        /// </summary>
         public void build()
         {
             options = new List<string>()
@@ -20,13 +30,13 @@ namespace p0.UI
                 "Exit",
                 "Login / Signup",
                 "Search customers by name",
-                "Display details of an order",
                 "Display all order history of a store location",
-                "Display all order history of a customer",
-                "Place an order"
             };
         }
 
+        /// <summary>
+        /// Prints available options to the screen and awaits user input / selection
+        /// </summary>
         public void prompt()
         {
             int choice = 0;
@@ -45,6 +55,10 @@ namespace p0.UI
             } while (choice != 0);
         }
 
+        /// <summary>
+        /// Primary selector for user options, will either launch new UI or database manager instances depending
+        /// </summary>
+        /// <param name="choice">The integer choice value selected by the user</param>
         public void select(int choice)
         {
             using (var bc = new BusinessContext())
@@ -56,41 +70,36 @@ namespace p0.UI
                         new LoginUI().prompt();
                         break;
                     case 2:
-                        var customers = infoManager.customersLike(Prompter.validatedInputString("First Name"), Prompter.validatedInputString("Last Name"));
-                        foreach (var c in customers)
+                        var customer = infoManager.customersLike(Prompter.validatedInputString("First Name"), Prompter.validatedInputString("Last Name"));
+                        if (customer != null)
                         {
-                            Console.WriteLine(c.ToString());
+                            Console.WriteLine(customer.ToString());
+                        }
+                        else
+                        {
+                            Console.WriteLine("No results found");
                         }
                         break;
                     case 3:
-                        var details = infoManager.orderDetails(Prompter.validatedInputString("order id"), null);
-                        foreach (var detail in details)
-                        {
-                            Console.WriteLine(detail.ToString());
-                        }
-                        break;
-                    case 4:
                         var result = infoManager.locationDetails(Prompter.validatedInputString("store location name"));
-                        foreach (var r in result)
+                        if (result != null)
                         {
-                            Console.WriteLine(r.ToString());
+                            foreach (var r in result)
+                            {
+                                Console.WriteLine(r.ToString());
+                            }
                         }
-                        break;
-                    case 5:
-                        var orders = infoManager.customerOrders(null);
-                        foreach (var o in orders)
+                        else
                         {
-                            Console.WriteLine(o.ToString());
+                            Console.WriteLine("No results found");
                         }
-                        break;
-                    case 6:
-                        Console.WriteLine("You must be logged in to do that. ");
                         break;
                     default:
                         Console.WriteLine("Please select a valid option");
                         break;
                 }
             }
+            Console.WriteLine();
         }
     }
 }

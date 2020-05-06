@@ -3,11 +3,19 @@ using System.Collections.Generic;
 
 namespace p0.UI
 {
+    /// <summary>
+    /// User Interface presented upon valid login
+    /// </summary>
     class CustomerUI : UserInterface
     {
+        // Options list public due to interface
         public List<string> options { get; set; }
         private Customer customer { get; set; }
 
+        /// <summary>
+        /// Sets up the customer user interface menu
+        /// </summary>
+        /// <param name="customer">The customer object representing the user after login</param>
         public CustomerUI(Customer customer)
         {
             Console.Clear();
@@ -15,6 +23,9 @@ namespace p0.UI
             this.customer = customer;
         }
 
+        /// <summary>
+        /// Initializes the choice selection list with customer specific options
+        /// </summary>
         public void build()
         {
             options = new List<string>()
@@ -26,6 +37,9 @@ namespace p0.UI
             };
         }
 
+        /// <summary>
+        /// Prints the options list's contents to the screen and awaits valid user input
+        /// </summary>
         public void prompt()
         {
             int choice = 0;
@@ -44,6 +58,10 @@ namespace p0.UI
             } while (choice != 0);
         }
 
+        /// <summary>
+        /// Primary selector following valid user choice from available options
+        /// </summary>
+        /// <param name="choice">Integer value of user choice</param>
         public void select(int choice)
         {
             using (var bc = new BusinessContext())
@@ -76,14 +94,14 @@ namespace p0.UI
                         }
                         else
                         {
-                            Console.WriteLine("Please input valid order ID");
+                            Console.WriteLine("No results found");
                         }
                         break;
                     default:
                         Console.WriteLine("Please select a valid option");
                         break;
                 }
-            }
+            } Console.WriteLine();
         }
     }
 }

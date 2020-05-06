@@ -3,16 +3,26 @@ using System.Collections.Generic;
 
 namespace p0.UI
 {
+    /// <summary>
+    /// Simple UI presenting login / account creation options
+    /// </summary>
     class LoginUI : UserInterface
     {
+        // Options list required public by interface
         public List<string> options { get; set; }
 
+        /// <summary>
+        /// Builds the options for the menu
+        /// </summary>
         public LoginUI()
         {
             Console.Clear();
             build();
         }
 
+        /// <summary>
+        /// Initializes the options selection menu with choices
+        /// </summary>
         public void build()
         {
             options = new List<string>()
@@ -23,6 +33,9 @@ namespace p0.UI
             };
         }
 
+        /// <summary>
+        /// Prints the contents of the options list to the screen and awaits valid user input
+        /// </summary>
         public void prompt()
         {
             int choice = 0;
@@ -41,6 +54,10 @@ namespace p0.UI
             } while (choice != 0);
         }
 
+        /// <summary>
+        /// Primary selector following valid user choice input
+        /// </summary>
+        /// <param name="choice">Integer choice value from user</param>
         public void select(int choice)
         {
             using (var bc = new BusinessContext())
@@ -73,7 +90,7 @@ namespace p0.UI
                         Console.WriteLine("Please select a valid option");
                         break;
                 }
-            }
+            } Console.WriteLine();
         }
     }
 }

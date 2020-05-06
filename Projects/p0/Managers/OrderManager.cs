@@ -5,11 +5,19 @@ using System.Linq;
 
 namespace p0
 {
+    /// <summary>
+    /// Manages order creation
+    /// </summary>
     class OrderManager
     {
         private Customer customer;
         private BusinessContext bc;
 
+        /// <summary>
+        /// Builds the manager with a specific customer and database context
+        /// </summary>
+        /// <param name="customer">The customer that is making the orders</param>
+        /// <param name="bc">The databse context to use</param>
         public OrderManager(Customer customer, BusinessContext bc)
         {
             this.customer = customer;
@@ -17,6 +25,9 @@ namespace p0
 
         }
 
+        /// <summary>
+        /// Prompts the console with a list of store locations, awaits valid input
+        /// </summary>
         public void prompt()
         {
             List<Location> locations = bc.Locations.ToList();
@@ -34,12 +45,17 @@ namespace p0
             search(locations[input - 1].LocationId);
         }
 
+        /// <summary>
+        /// Main order placing logic, presents options for placing order based on location
+        /// </summary>
+        /// <param name="locationId">The location id for matching store inventory</param>
         public void search(string locationId)
         {
             List<Inventory> inventories = bc.Inventory.ToList();
             List<Product> products = bc.Products.ToList();
             string orderId = Guid.NewGuid().ToString();
 
+            // Create new order
             Order order = new Order()
             {
                 OrderId = orderId,
@@ -49,8 +65,10 @@ namespace p0
                 Total = 0
             };
 
+            // While we're still placing an order...
             while (true)
             {
+                // Show available inventory, await user choice
                 var available = inventories.Where(i => i.LocationId.Equals(locationId)).ToList();
                 Inventory inventory;
                 Product product;
@@ -69,11 +87,11 @@ namespace p0
 
                 }
 
-                // new method?
                 inventory = available[index - 1];
                 product = products.Where(p => p.ProductId == inventory.ProductId).FirstOrDefault(); 
-
                 int quantity = Prompter.validatedInputInteger("quantity", inventory.Quantity);
+                
+                // If we've added an item...
                 if (quantity > 0)
                 {
                     // Check if there is an existing order item for this product...
