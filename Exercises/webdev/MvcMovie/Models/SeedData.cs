@@ -30,7 +30,7 @@ namespace MvcMovie.Models {
                         },
                         
                         new Movie {
-                            Title = "GhostBuster 2",
+                            Title = "GhostBusters 2",
                             ReleaseDate = DateTime.Parse("1986-2-23"),
                             Genre = "Comedy",
                             Price = 9.99M
