@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Sign Up!</h1>
+    <form action="/action_page.php" method="get">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        <br>
+        <label for="location">Location:</label>
+        <select name="location">
+            <option value="san-francisco" selcted>San Francsico</option>
+            <option value="atlanta">Atlanta</option>
+            <option value="new-york-city">New York City</option>
+        </select>
+        <br>
+        <div>
+            <fieldset>
+                <legend>Gender</legend>
+                <label for="female">Female</label>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="male">Male</label>
+                <input type="radio" id="male" name="gender" value="male">
+            </fieldset>
+
+        </div>
+        <label for="experience">Experience</label>
+        <br>
+        <textarea id="experience" name="experience"></textarea>
+        <br>
+        <input type="submit" value="Sign Up">
+        <p>
+            <a href="#">Twitter</a> |
+            <a href="#">Facebook</a> |
+            <a href="#">Flickr</a>
+            <p>
+    </form>
+</body>
+
+</html>
