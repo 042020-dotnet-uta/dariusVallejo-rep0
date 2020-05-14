@@ -28,7 +28,7 @@ stages:
       - job: 'test'
         dependsOn: 'build'
         steps:
-          - script: 'dotnet test p0_test' 
+          - script: dotnet test 'Projects/p0/p0_test' 
 
       - job: 'publish'
         dependsOn: 'test'
