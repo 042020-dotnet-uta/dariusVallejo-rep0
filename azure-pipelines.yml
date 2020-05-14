@@ -28,11 +28,6 @@ stages:
       - job: 'test'
         dependsOn: 'build'
         steps:
-          - script: dotnet test 'Projects/p0/p0_test' 
-
-      - job: 'publish'
-        dependsOn: 'test'
-        steps:
-          - script: 'dotnet publish'
+          - script: dotnet test 'Projects/p0/p0_test'
 
 name: '$(date:yyyyMMdd)$(rev:rr)'
