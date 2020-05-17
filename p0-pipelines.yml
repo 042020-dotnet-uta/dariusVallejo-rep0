@@ -38,8 +38,8 @@ steps:
     testAssemblyVer2: 'Projects\p0\p0_test\bin\Debug\netcoreapp3.1\p0_test.dll'
     resultsFolder: 'D:\a\1\TestResults'
     codeCoverageEnabled: true
-    # platform: '$(BuildPlatform)'
-    # configuration: '$(BuildConfiguration)'
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
 
 - task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
   displayName: 'Run Code Analysis'
