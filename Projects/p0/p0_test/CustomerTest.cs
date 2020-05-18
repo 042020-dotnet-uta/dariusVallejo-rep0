@@ -6,7 +6,6 @@ namespace p0_test
 {
     public class CustomerTest
     {
-	/*
         [Fact]
         public void TestCustomerCreation()
         {
@@ -59,6 +58,5 @@ namespace p0_test
                 Assert.Null(missing);
             }
         }
-	*/
     }
 }
