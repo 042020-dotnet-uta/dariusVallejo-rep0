@@ -24,8 +24,8 @@ steps:
   displayName: 'Prepare analysis on SonarCloud'
   inputs:
     SonarCloud: SonarCloud
-    organization: 'darius-vallejo'
-    projectKey: p0
+    organization: 'asldkjf'
+    projectKey: aasdf
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
