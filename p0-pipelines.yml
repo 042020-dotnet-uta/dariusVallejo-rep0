@@ -23,9 +23,9 @@ steps:
 - task: SonarCloudPrepare@1
   displayName: 'Prepare analysis on SonarCloud'
   inputs:
-    SonarCloud: steve
-    organization: some-new
-    projectKey: some-new-key
+    SonarCloud: my-sonarcloud-connection
+    organization: my-organization-name
+    projectKey: my-project-name
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
